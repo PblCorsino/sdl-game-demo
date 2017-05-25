@@ -1,2 +1,3 @@
+-I/home/corsino/Desarrollo/c++/sdl/include
 -I/usr/include/SDL2
 -std=gnu++11
