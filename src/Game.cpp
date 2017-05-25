@@ -69,6 +69,10 @@ void Game::render() {
 
   // Show the image
   SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+  SDL_Rect m_destinationRectangle2 = m_destinationRectangle;
+  m_destinationRectangle2.x = 128;
+  SDL_RenderCopyEx(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle2,
+                   0, 0, SDL_FLIP_HORIZONTAL); // Render the image horizontal flipped
 
   // Show the window
   SDL_RenderPresent(m_pRenderer);
