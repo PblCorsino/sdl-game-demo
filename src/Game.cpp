@@ -43,12 +43,13 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   m_bRunning = true; // Everythin inited successfully, start the main loop
 
   // Load a image
-  SDL_Surface* pTempSurface = SDL_LoadBMP("../res/rider.bmp");
+  SDL_Surface* pTempSurface = SDL_LoadBMP("../res/animate.bmp");
   m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
   SDL_FreeSurface(pTempSurface);
 
-  // Obtain size of the image
-  SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+  m_sourceRectangle.w = 128;
+  m_sourceRectangle.h = 82;
+
   m_destinationRectangle.x = m_sourceRectangle.x = 0;
   m_destinationRectangle.y = m_sourceRectangle.y = 0;
   m_destinationRectangle.w = m_sourceRectangle.w;
@@ -57,6 +58,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   return true;
 }
 
+// Update
+void Game::update() {
+  m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+}
 // Render
 void Game::render() {
   // Clear the window to black
