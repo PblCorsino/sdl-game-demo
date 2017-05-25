@@ -8,7 +8,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   if (fullscreen) {
     flags = SDL_WINDOW_FULLSCREEN;
   }
-  
+
   if (SDL_Init(SDL_INIT_EVERYTHING) >= 0) {
     std::cout << "SDL init sucess" << std::endl;
     // If succedded create our window
@@ -42,6 +42,18 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   std::cout << "Init success" << std::endl;
   m_bRunning = true; // Everythin inited successfully, start the main loop
 
+  // Load a image
+  SDL_Surface* pTempSurface = SDL_LoadBMP("../res/rider.bmp");
+  m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+  SDL_FreeSurface(pTempSurface);
+
+  // Obtain size of the image
+  SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+  m_destinationRectangle.x = m_sourceRectangle.x = 0;
+  m_destinationRectangle.y = m_sourceRectangle.y = 0;
+  m_destinationRectangle.w = m_sourceRectangle.w;
+  m_destinationRectangle.h = m_sourceRectangle.h;
+
   return true;
 }
 
@@ -49,6 +61,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 void Game::render() {
   // Clear the window to black
   SDL_RenderClear(m_pRenderer);
+
+  // Show the image
+  SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
 
   // Show the window
   SDL_RenderPresent(m_pRenderer);
