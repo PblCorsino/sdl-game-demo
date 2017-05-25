@@ -22,7 +22,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
       // Renderer init success
       if (m_pRenderer != 0) {
         std::cout << "Renderer creation success" << std::endl;
-        SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
       }
       else {
         std::cout << "Renderer init fail" << std::endl;
@@ -43,7 +43,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   m_bRunning = true; // Everythin inited successfully, start the main loop
 
   // Load a image
-  SDL_Surface* pTempSurface = SDL_LoadBMP("../res/animate.bmp");
+  SDL_Surface* pTempSurface = IMG_Load("../res/animate-alpha.png");
   m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
   SDL_FreeSurface(pTempSurface);
 

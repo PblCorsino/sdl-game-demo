@@ -2,6 +2,7 @@
 #define __Game__
 
 #include<SDL.h>
+#include<SDL_image.h>
 
 class Game {
 public:
