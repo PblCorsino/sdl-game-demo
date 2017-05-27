@@ -1,5 +1,7 @@
 #include "include/TextureManager.hpp"
 
+TextureManager* TextureManager::s_pInstance = 0;
+
 // Load image in a renderer
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer) {
   SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
