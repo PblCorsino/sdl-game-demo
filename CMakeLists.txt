@@ -11,7 +11,9 @@ SET(CMAKE_CXX_STANDARD 11)
 SET(SOURCE_FILES
   src/main.cpp
   src/Game.cpp
-  src/TextureManager.cpp)
+  src/TextureManager.cpp
+  src/GameObject.cpp
+  src/Player.cpp)
 
 # Route to the executable and main file of the project
 ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
