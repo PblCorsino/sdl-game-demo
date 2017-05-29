@@ -1,9 +1,11 @@
 #ifndef __Game__
 #define __Game__
 
+#include<vector>
 #include<SDL.h>
 #include"TextureManager.hpp"
 #include"Player.hpp"
+#include"Enemy.hpp"
 
 class Game {
 public:
@@ -25,8 +27,10 @@ private:
   SDL_Window* m_pWindow;
   SDL_Renderer* m_pRenderer;
 
-  GameObject m_go;
-  Player m_player;
+  GameObject* m_go;
+  Player* m_player;
+  GameObject* m_enemy;
+  std::vector<GameObject*> m_gameObjects;
 
   int m_currentFrame;
 

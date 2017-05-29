@@ -13,7 +13,8 @@ SET(SOURCE_FILES
   src/Game.cpp
   src/TextureManager.cpp
   src/GameObject.cpp
-  src/Player.cpp)
+  src/Player.cpp
+  src/Enemy.cpp)
 
 # Route to the executable and main file of the project
 ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
