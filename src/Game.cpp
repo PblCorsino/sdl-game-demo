@@ -67,8 +67,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 // Update
 void Game::update() {
   // Loop through and update our objects
-  for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++) {
-    m_gameObjects[i]->update();
+  for(auto& gameObject : m_gameObjects) {
+    gameObject->update();
   }
 }
 
@@ -78,8 +78,8 @@ void Game::render() {
   SDL_RenderClear(m_pRenderer);
 
   // Loop through the objects and draw them
-  for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++) {
-    m_gameObjects[i]->draw(m_pRenderer);
+  for(auto& gameObject : m_gameObjects) {
+    gameObject->draw(m_pRenderer);
   }
 
   // Show the window
