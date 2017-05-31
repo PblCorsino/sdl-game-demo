@@ -1,21 +1,25 @@
-#include "include/Game.hpp"
-
-// Our Game object
-Game* g_game = 0;
+#include<iostream>
+#include"include/Game.hpp"
 
 int main() {
-  g_game = new Game();
+  std::cout << "Game init attempt..." << std::endl;
 
-  g_game->init("Chapter 1", 100, 100, 640, 480, false);
+  if (TheGame::Instance()->init("SDL game demo", 100, 100, 640, 480, false)) {
+    std::cout << "Game init success" << std::endl;
+    while (TheGame::Instance()->running()) {
+      TheGame::Instance()->handleEvents();
+      TheGame::Instance()->update();
+      TheGame::Instance()->render();
 
-  while(g_game->running()) {
-    g_game->handleEvents();
-    g_game->update();
-    g_game->render();
-
-    SDL_Delay(10); // Add a delay
+      SDL_Delay(10);
+    }
   }
-  g_game->clean();
+  else {
+    std::cout << "Game init failure: " << SDL_GetError() << std::endl;
+    return -1;
+  }
+  std::cout << "Game closing.." << std::endl;
+  TheGame::Instance()->clean();
 
   return 0;
 }

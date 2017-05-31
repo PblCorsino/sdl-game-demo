@@ -12,7 +12,7 @@ SET(SOURCE_FILES
   src/main.cpp
   src/Game.cpp
   src/TextureManager.cpp
-  src/GameObject.cpp
+  src/SDLGameObject.cpp
   src/Player.cpp
   src/Enemy.cpp)
 

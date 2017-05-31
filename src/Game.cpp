@@ -1,6 +1,8 @@
 #include <iostream>
 #include "include/Game.hpp"
 
+Game* Game::s_pInstance = 0;
+
 // Initialize SDL
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
   int flags = 0;
@@ -48,13 +50,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   }
 
   // Load the game objects
-  m_go = new GameObject();
-  m_player = new Player();
-  m_enemy = new Enemy();
-
-  m_go->load(100, 100, 128, 82, "animate");
-  m_player->load(100, 100, 128, 82, "animate");
-  m_enemy->load(0, 0, 128, 82, "animate");
+  m_go = new SDLGameObject(new LoaderParams(100, 100, 128, 82, "animate"));
+  m_player = new Player(new LoaderParams(100, 100, 128, 82, "animate"));
+  m_enemy = new Enemy(new LoaderParams(0, 0, 128, 82, "animate"));
 
   // Add the game objects to the vector
   m_gameObjects.push_back(m_go);
@@ -79,7 +77,7 @@ void Game::render() {
 
   // Loop through the objects and draw them
   for(auto& gameObject : m_gameObjects) {
-    gameObject->draw(m_pRenderer);
+    gameObject->draw();
   }
 
   // Show the window
