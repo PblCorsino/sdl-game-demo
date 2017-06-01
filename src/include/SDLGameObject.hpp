@@ -5,6 +5,7 @@
 #include"GameObject.hpp"
 #include"TextureManager.hpp"
 #include"LoaderParams.hpp"
+#include"Vector2D.hpp"
 
 class SDLGameObject : public GameObject {
 public:
@@ -18,8 +19,7 @@ public:
 
 protected:
 
-  int m_x;
-  int m_y;
+  Vector2D m_position;
   int m_width;
   int m_height;
   int m_currentRow;
