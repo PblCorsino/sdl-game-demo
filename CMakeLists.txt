@@ -11,6 +11,7 @@ SET(CMAKE_CXX_STANDARD 11)
 SET(SOURCE_FILES
   src/main.cpp
   src/Game.cpp
+  src/InputHandler.cpp
   src/TextureManager.cpp
   src/Vector2D.cpp
   src/SDLGameObject.cpp

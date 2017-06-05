@@ -1,4 +1,5 @@
 #include <iostream>
+#include"include/InputHandler.hpp"
 #include "include/Game.hpp"
 
 Game* Game::s_pInstance = 0;
@@ -44,6 +45,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   std::cout << "Init success" << std::endl;
   m_bRunning = true; // Everythin inited successfully, start the main loop
 
+  // Initialise joysticks
+  TheInputHandler::Instance()->initialiseJoysticks();
+
   // Load a image
   if (!TheTextureManager::Instance()->load("../res/animate-alpha.png", "animate", m_pRenderer)) {
     return false;
@@ -86,23 +90,19 @@ void Game::render() {
 
 // Handle events
 void Game::handleEvents() {
-  SDL_Event event;
-  if (SDL_PollEvent(&event)) {
-    switch (event.type) {
-    case SDL_QUIT:
-      m_bRunning = false;
-      break;
-
-    default:
-      break;
-    }
-  }
+  TheInputHandler::Instance()->update();
 }
 
 // Clean
 void Game::clean() {
   std::cout << "Cleaning game" << std::endl;
+  TheInputHandler::Instance()->clean();
   SDL_DestroyWindow(m_pWindow);
   SDL_DestroyRenderer(m_pRenderer);
   SDL_Quit();
+}
+
+// Quit
+void Game::quit() {
+  m_bRunning = false;
 }

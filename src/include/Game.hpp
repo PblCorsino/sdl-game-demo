@@ -24,6 +24,7 @@ public:
   void update();
   void handleEvents();
   void clean();
+  void quit();
 
   SDL_Renderer* getRenderer() const {
     return m_pRenderer;
