@@ -43,11 +43,13 @@ public:
   bool getMouseButtonState(int buttonNumber) {
     return m_mouseButtonStates[buttonNumber];
   }
+  Vector2D* getMousePosition() {
+    return m_mousePosition;
+  }
 
 private:
 
   InputHandler();
-
   static InputHandler* s_pInstance;
 
   const int m_joystickDeadZone = 10000;
@@ -59,6 +61,8 @@ private:
   std::vector<std::vector<bool>> m_buttonStates;
   // Vector to store the mouse buttons
   std::vector<bool> m_mouseButtonStates;
+  // Position of the mouse cursor
+  Vector2D* m_mousePosition;
 };
 
 typedef InputHandler TheInputHandler;

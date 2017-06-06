@@ -4,10 +4,12 @@
 InputHandler* InputHandler::s_pInstance = 0;
 
 InputHandler::InputHandler() {
-  // Initialise mouse buttons  
+  // Initialise mouse buttons
   for (int i = 0; i < 3; i++) {
     m_mouseButtonStates.push_back(false);
   }
+  // Initialise the mouse position
+  m_mousePosition = new Vector2D(0, 0);
 }
 
 void InputHandler::initialiseJoysticks() {
@@ -82,7 +84,7 @@ void InputHandler::update() {
     if (event.type == SDL_QUIT) {
       TheGame::Instance()->quit();
     }
-    // Mouse events
+    // Mouse click events
     if (event.type == SDL_MOUSEBUTTONDOWN) {
       if (event.button.button == SDL_BUTTON_LEFT) {
         m_mouseButtonStates[LEFT] = true;
@@ -104,6 +106,11 @@ void InputHandler::update() {
       if (event.button.button == SDL_BUTTON_RIGHT) {
         m_mouseButtonStates[RIGHT] = false;
       }
+    }
+    // Mouse move events
+    if (event.type == SDL_MOUSEMOTION) {
+      m_mousePosition->setX(event.motion.x);
+      m_mousePosition->setY(event.motion.y);
     }
     // Joystick buttons
     if (event.type == SDL_JOYBUTTONDOWN) {

@@ -22,7 +22,7 @@ void Player::update() {
 }
 
 void Player::clean() {
-  
+
 }
 
 void Player::handleInput() {
@@ -30,6 +30,10 @@ void Player::handleInput() {
   if (TheInputHandler::Instance()->getMouseButtonState(LEFT)) {
     m_velocity.setX(1);
   }
+  // Follow the mouse
+  Vector2D* vec = TheInputHandler::Instance()->getMousePosition();
+  m_velocity = (*vec - m_position) / 100;
+
   // Joystick controls
   if (TheInputHandler::Instance()->joysticksInitialised()) {
     // Change velocity if the user click the button 3 (Y) in the joystick
@@ -53,5 +57,5 @@ void Player::handleInput() {
         TheInputHandler::Instance()->yvalue(0, 2) < 0) {
       m_velocity.setY(1 * TheInputHandler::Instance()->yvalue(0, 2));
     }
-  } 
+  }
 }
