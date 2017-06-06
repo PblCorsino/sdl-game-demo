@@ -4,6 +4,7 @@
 #include<iostream>
 #include<vector>
 #include"SDL.h"
+#include"Vector2D.hpp"
 
 class InputHandler {
 
@@ -25,6 +26,8 @@ public:
   bool joysticksInitialised() {
     return m_bJoysticksInitialised;
   }
+  int xvalue(int joy, int stick);
+  int yvalue(int joy, int stick);
 
 private:
 
@@ -32,8 +35,11 @@ private:
 
   static InputHandler* s_pInstance;
 
+  const int m_joystickDeadZone = 10000;
   std::vector<SDL_Joystick*> m_joysticks;
   bool m_bJoysticksInitialised;
+  // Vector to store the axes values
+  std::vector<std::pair<Vector2D*, Vector2D*>> m_joystickValues;
 };
 
 typedef InputHandler TheInputHandler;

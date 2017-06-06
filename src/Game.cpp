@@ -54,12 +54,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   }
 
   // Load the game objects
-  m_go = new SDLGameObject(new LoaderParams(100, 100, 128, 82, "animate"));
   m_player = new Player(new LoaderParams(100, 100, 128, 82, "animate"));
   m_enemy = new Enemy(new LoaderParams(0, 0, 128, 82, "animate"));
 
   // Add the game objects to the vector
-  m_gameObjects.push_back(m_go);
   m_gameObjects.push_back(m_player);
   m_gameObjects.push_back(m_enemy);
 
