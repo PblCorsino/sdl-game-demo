@@ -6,6 +6,13 @@
 #include"SDL.h"
 #include"Vector2D.hpp"
 
+// Mouse buttons values
+enum mouse_buttons {
+  LEFT = 0,
+  MIDDLE = 1,
+  RIGHT = 2
+};
+
 class InputHandler {
 
 public:
@@ -32,9 +39,14 @@ public:
     return m_buttonStates[joy][buttonNumber];
   }
 
+  // Mouse
+  bool getMouseButtonState(int buttonNumber) {
+    return m_mouseButtonStates[buttonNumber];
+  }
+
 private:
 
-  InputHandler() {};
+  InputHandler();
 
   static InputHandler* s_pInstance;
 
@@ -45,6 +57,8 @@ private:
   std::vector<std::pair<Vector2D*, Vector2D*>> m_joystickValues;
   // Vector to store the button states
   std::vector<std::vector<bool>> m_buttonStates;
+  // Vector to store the mouse buttons
+  std::vector<bool> m_mouseButtonStates;
 };
 
 typedef InputHandler TheInputHandler;

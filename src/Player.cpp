@@ -26,6 +26,11 @@ void Player::clean() {
 }
 
 void Player::handleInput() {
+  // Mouse controls
+  if (TheInputHandler::Instance()->getMouseButtonState(LEFT)) {
+    m_velocity.setX(1);
+  }
+  // Joystick controls
   if (TheInputHandler::Instance()->joysticksInitialised()) {
     // Change velocity if the user click the button 3 (Y) in the joystick
     if (TheInputHandler::Instance()->getButtonState(0, 3)) {
