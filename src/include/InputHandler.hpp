@@ -28,6 +28,9 @@ public:
   }
   int xvalue(int joy, int stick);
   int yvalue(int joy, int stick);
+  bool getButtonState(int joy, int buttonNumber) {
+    return m_buttonStates[joy][buttonNumber];
+  }
 
 private:
 
@@ -40,6 +43,8 @@ private:
   bool m_bJoysticksInitialised;
   // Vector to store the axes values
   std::vector<std::pair<Vector2D*, Vector2D*>> m_joystickValues;
+  // Vector to store the button states
+  std::vector<std::vector<bool>> m_buttonStates;
 };
 
 typedef InputHandler TheInputHandler;

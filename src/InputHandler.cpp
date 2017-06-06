@@ -18,6 +18,14 @@ void InputHandler::initialiseJoysticks() {
         m_joysticks.push_back(joy);
         // Add a pair of vectors for the axis
         m_joystickValues.push_back(std::make_pair(new Vector2D(0,0), new Vector2D(0,0)));
+        // Initialise buttons
+        std::vector<bool> tempButtons;
+
+        for (int j = 0; j < SDL_JoystickNumButtons(joy); j++) {
+          tempButtons.push_back(false);
+        }
+
+        m_buttonStates.push_back(tempButtons);
       }
       else {
         std::cout << SDL_GetError();
@@ -67,6 +75,16 @@ void InputHandler::update() {
     if (event.type == SDL_QUIT) {
       TheGame::Instance()->quit();
     }
+    // Joystick buttons
+    if (event.type == SDL_JOYBUTTONDOWN) {
+      int whichOne = event.jaxis.which;
+      m_buttonStates[whichOne][event.jbutton.button] = true;
+    }
+    if (event.type == SDL_JOYBUTTONUP) {
+      int whichOne = event.jaxis.which;
+      m_buttonStates[whichOne][event.jbutton.button] = false;
+    }
+    // Joystick axis movement
     if (event.type == SDL_JOYAXISMOTION) {
       int whichOne = event.jaxis.which; // get which controller
 

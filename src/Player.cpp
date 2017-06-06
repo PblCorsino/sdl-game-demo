@@ -26,6 +26,10 @@ void Player::clean() {
 }
 
 void Player::handleInput() {
+  // Change velocity if the user click the button 3 (Y) in the joystick
+  if (TheInputHandler::Instance()->getButtonState(0, 3)) {
+    m_velocity.setX(1);
+  }
   // Move the player with both Joystick axis
   if (TheInputHandler::Instance()->joysticksInitialised()) {
     if (TheInputHandler::Instance()->xvalue(0, 1) > 0 ||
