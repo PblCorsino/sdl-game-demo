@@ -80,106 +80,170 @@ int InputHandler::yvalue(int joy, int stick) {
 void InputHandler::update() {
   SDL_Event event;
 
+  // Update keyboard events array
+  m_keystates = SDL_GetKeyboardState(0);
+
   while (SDL_PollEvent(&event)) {
-    if (event.type == SDL_QUIT) {
+    switch (event.type) {
+    case SDL_QUIT:
       TheGame::Instance()->quit();
-    }
-    // Keyboard state, store an array with the state of the keyboard events
-    m_keystates = SDL_GetKeyboardState(0);
-    // Mouse click events
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-      if (event.button.button == SDL_BUTTON_LEFT) {
-        m_mouseButtonStates[LEFT] = true;
-      }
-      if (event.button.button == SDL_BUTTON_MIDDLE) {
-        m_mouseButtonStates[MIDDLE] = true;
-      }
-      if (event.button.button == SDL_BUTTON_RIGHT) {
-        m_mouseButtonStates[RIGHT] = true;
-      }
-    }
-    if (event.type == SDL_MOUSEBUTTONUP) {
-      if (event.button.button == SDL_BUTTON_LEFT) {
-        m_mouseButtonStates[LEFT] = false;
-      }
-      if (event.button.button == SDL_BUTTON_MIDDLE) {
-        m_mouseButtonStates[MIDDLE] = false;
-      }
-      if (event.button.button == SDL_BUTTON_RIGHT) {
-        m_mouseButtonStates[RIGHT] = false;
-      }
-    }
-    // Mouse move events
-    if (event.type == SDL_MOUSEMOTION) {
-      m_mousePosition->setX(event.motion.x);
-      m_mousePosition->setY(event.motion.y);
-    }
-    // Joystick buttons
-    if (event.type == SDL_JOYBUTTONDOWN) {
-      int whichOne = event.jaxis.which;
-      m_buttonStates[whichOne][event.jbutton.button] = true;
-    }
-    if (event.type == SDL_JOYBUTTONUP) {
-      int whichOne = event.jaxis.which;
-      m_buttonStates[whichOne][event.jbutton.button] = false;
-    }
-    // Joystick axis movement
-    if (event.type == SDL_JOYAXISMOTION) {
-      int whichOne = event.jaxis.which; // get which controller
+      break;
+      
+    case SDL_JOYAXISMOTION:
+      onJoystickAxisMove(event);
+      break;
+    case SDL_JOYBUTTONDOWN:
+      onJoystickButtonDown(event);
+      break;
+    case SDL_JOYBUTTONUP:
+      onJoystickButtonUp(event);
+      break;
 
-      // left stick move left or right
-      if (event.jaxis.axis == 0) {
-        if (event.jaxis.value > m_joystickDeadZone) {
-          m_joystickValues[whichOne].first->setX(1);
-        }
-        else if (event.jaxis.value < -m_joystickDeadZone) {
-          m_joystickValues[whichOne].first->setX(-1);
-        }
-        else {
-          m_joystickValues[whichOne].first->setX(0);
-        }
-      }
+    case SDL_MOUSEMOTION:
+      onMouseMove(event);
+      break;
+    case SDL_MOUSEBUTTONDOWN:
+      onMouseButtonDown(event);
+      break;
+    case SDL_MOUSEBUTTONUP:
+      onMouseButtonUp(event);
+      break;
 
-      // Left stick move up or down
-      if (event.jaxis.axis == 1) {
-        if (event.jaxis.value > m_joystickDeadZone) {
-          m_joystickValues[whichOne].first->setY(1);
-        }
-        else if (event.jaxis.value < -m_joystickDeadZone) {
-          m_joystickValues[whichOne].first->setY(-1);
-        }
-        else {
-          m_joystickValues[whichOne].first->setY(0);
-        }
-      }
-
-      // Right stick move left or right
-      if (event.jaxis.axis == 3) {
-        if (event.jaxis.value > m_joystickDeadZone) {
-          m_joystickValues[whichOne].second->setX(1);
-        }
-        else if (event.jaxis.value < -m_joystickDeadZone) {
-          m_joystickValues[whichOne].second->setX(-1);
-        }
-        else {
-          m_joystickValues[whichOne].second->setX(0);
-        }
-      }
-
-      // Left stick move up or down
-      if (event.jaxis.axis == 4) {
-        if (event.jaxis.value > m_joystickDeadZone) {
-          m_joystickValues[whichOne].second->setY(1);
-        }
-        else if (event.jaxis.value < -m_joystickDeadZone) {
-          m_joystickValues[whichOne].second->setY(-1);
-        }
-        else {
-          m_joystickValues[whichOne].second->setY(0);
-        }
-      }
-
+    case SDL_KEYDOWN:
+      onKeyDown();
+      break;
+    case SDL_KEYUP:
+      onKeyUp();
+      break;
+    default:
+      break;
     }
+  }
+}
+
+// Handler for key press events
+void InputHandler::onKeyDown() {
+  // Update keyboard events array
+  m_keystates = SDL_GetKeyboardState(0);
+}
+
+// Handler for key release events
+void InputHandler::onKeyUp() {
+  // Update keyboard events array
+  m_keystates = SDL_GetKeyboardState(0);
+}
+
+// Handler for mouse click events
+void InputHandler::onMouseButtonDown(SDL_Event& event) {
+  if (event.type == SDL_MOUSEBUTTONDOWN) {
+    if (event.button.button == SDL_BUTTON_LEFT) {
+      m_mouseButtonStates[LEFT] = true;
+    }
+    if (event.button.button == SDL_BUTTON_MIDDLE) {
+      m_mouseButtonStates[MIDDLE] = true;
+    }
+    if (event.button.button == SDL_BUTTON_RIGHT) {
+      m_mouseButtonStates[RIGHT] = true;
+    }
+  }
+}
+
+// Handler for mouse release events
+void InputHandler::onMouseButtonUp(SDL_Event &event) {
+  if (event.type == SDL_MOUSEBUTTONUP) {
+    if (event.button.button == SDL_BUTTON_LEFT) {
+      m_mouseButtonStates[LEFT] = false;
+    }
+    if (event.button.button == SDL_BUTTON_MIDDLE) {
+      m_mouseButtonStates[MIDDLE] = false;
+    }
+    if (event.button.button == SDL_BUTTON_RIGHT) {
+      m_mouseButtonStates[RIGHT] = false;
+    }
+  }
+}
+
+// Handler for mouse move event
+void InputHandler::onMouseMove(SDL_Event& event) {
+  if (event.type == SDL_MOUSEMOTION) {
+    m_mousePosition->setX(event.motion.x);
+    m_mousePosition->setY(event.motion.y);
+  }
+}
+
+// Handler for joysticks axis movements
+void InputHandler::onJoystickAxisMove(SDL_Event& event) {
+  if (event.type == SDL_JOYAXISMOTION) {
+    int whichOne = event.jaxis.which; // get which controller
+
+    // left stick move left or right
+    if (event.jaxis.axis == 0) {
+      if (event.jaxis.value > m_joystickDeadZone) {
+        m_joystickValues[whichOne].first->setX(1);
+      }
+      else if (event.jaxis.value < -m_joystickDeadZone) {
+        m_joystickValues[whichOne].first->setX(-1);
+      }
+      else {
+        m_joystickValues[whichOne].first->setX(0);
+      }
+    }
+
+    // Left stick move up or down
+    if (event.jaxis.axis == 1) {
+      if (event.jaxis.value > m_joystickDeadZone) {
+        m_joystickValues[whichOne].first->setY(1);
+      }
+      else if (event.jaxis.value < -m_joystickDeadZone) {
+        m_joystickValues[whichOne].first->setY(-1);
+      }
+      else {
+        m_joystickValues[whichOne].first->setY(0);
+      }
+    }
+
+    // Right stick move left or right
+    if (event.jaxis.axis == 3) {
+      if (event.jaxis.value > m_joystickDeadZone) {
+        m_joystickValues[whichOne].second->setX(1);
+      }
+      else if (event.jaxis.value < -m_joystickDeadZone) {
+        m_joystickValues[whichOne].second->setX(-1);
+      }
+      else {
+        m_joystickValues[whichOne].second->setX(0);
+      }
+    }
+
+    // Left stick move up or down
+    if (event.jaxis.axis == 4) {
+      if (event.jaxis.value > m_joystickDeadZone) {
+        m_joystickValues[whichOne].second->setY(1);
+      }
+      else if (event.jaxis.value < -m_joystickDeadZone) {
+        m_joystickValues[whichOne].second->setY(-1);
+      }
+      else {
+        m_joystickValues[whichOne].second->setY(0);
+      }
+    }
+
+  }
+}
+
+// Handler for joysticks button press
+void InputHandler::onJoystickButtonDown(SDL_Event& event) {
+  if (event.type == SDL_JOYBUTTONDOWN) {
+    int whichOne = event.jaxis.which;
+    m_buttonStates[whichOne][event.jbutton.button] = true;
+  }
+}
+
+// Handler for joysticks button release
+void InputHandler::onJoystickButtonUp(SDL_Event& event) {
+  if (event.type == SDL_JOYBUTTONUP) {
+    int whichOne = event.jaxis.which;
+    m_buttonStates[whichOne][event.jbutton.button] = false;
   }
 }
 

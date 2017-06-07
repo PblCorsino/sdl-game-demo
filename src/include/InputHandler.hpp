@@ -55,6 +55,20 @@ private:
   InputHandler();
   static InputHandler* s_pInstance;
 
+  // Handle keyboard events
+  void onKeyDown();
+  void onKeyUp();
+
+  // Handle mouse events
+  void onMouseMove(SDL_Event& event);
+  void onMouseButtonDown(SDL_Event& event);
+  void onMouseButtonUp(SDL_Event& event);
+
+  // Handle joysticks events
+  void onJoystickAxisMove(SDL_Event& event);
+  void onJoystickButtonDown(SDL_Event& event);
+  void onJoystickButtonUp(SDL_Event& event);
+
   const int m_joystickDeadZone = 10000;
   std::vector<SDL_Joystick*> m_joysticks;
   bool m_bJoysticksInitialised;
