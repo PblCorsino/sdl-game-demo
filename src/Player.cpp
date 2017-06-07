@@ -26,13 +26,25 @@ void Player::clean() {
 }
 
 void Player::handleInput() {
+  // Keyboard controls
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+    m_velocity.setX(2);
+  }
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+    m_velocity.setX(-2);
+  }
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+    m_velocity.setY(-2);
+  }
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+    m_velocity.setY(2);
+  }
   // Mouse controls
   if (TheInputHandler::Instance()->getMouseButtonState(LEFT)) {
-    m_velocity.setX(1);
+    // Follow the mouse
+    Vector2D* vec = TheInputHandler::Instance()->getMousePosition();
+    m_velocity = (*vec - m_position) / 100;
   }
-  // Follow the mouse
-  Vector2D* vec = TheInputHandler::Instance()->getMousePosition();
-  m_velocity = (*vec - m_position) / 100;
 
   // Joystick controls
   if (TheInputHandler::Instance()->joysticksInitialised()) {

@@ -84,6 +84,8 @@ void InputHandler::update() {
     if (event.type == SDL_QUIT) {
       TheGame::Instance()->quit();
     }
+    // Keyboard state, store an array with the state of the keyboard events
+    m_keystates = SDL_GetKeyboardState(0);
     // Mouse click events
     if (event.type == SDL_MOUSEBUTTONDOWN) {
       if (event.button.button == SDL_BUTTON_LEFT) {
@@ -179,6 +181,17 @@ void InputHandler::update() {
 
     }
   }
+}
+
+// Check for key down in the keystates array
+// Keyboard scancodes in https://wiki.libsdl.org/SDL_Scancode
+bool InputHandler::isKeyDown(SDL_Scancode key) {
+  if (m_keystates != 0) {
+    if (m_keystates[key] == 1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 void InputHandler::clean() {
