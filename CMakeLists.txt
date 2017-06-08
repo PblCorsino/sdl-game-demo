@@ -16,6 +16,8 @@ SET(SOURCE_FILES
   src/Vector2D.cpp
   src/SDLGameObject.cpp
   src/Player.cpp
+  src/MenuState.cpp
+  src/PlayState.cpp
   src/Enemy.cpp)
 
 # Route to the executable and main file of the project
