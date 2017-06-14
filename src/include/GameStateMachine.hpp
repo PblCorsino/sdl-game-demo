@@ -2,7 +2,8 @@
 #define __GAMESTATEMACHINE__
 
 #include<vector>
-#include"GameState.hpp"
+#include"MenuState.hpp"
+#include"PlayState.hpp"
 
 class GameStateMachine {
 
@@ -11,6 +12,9 @@ public:
   void pushState(GameState* pState);
   void changeState(GameState* pState);
   void popState();
+
+  void update();
+  void render();
 
 private:
 

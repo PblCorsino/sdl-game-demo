@@ -1,6 +1,6 @@
 #include <iostream>
 #include"include/InputHandler.hpp"
-#include "include/Game.hpp"
+#include"include/Game.hpp"
 
 Game* Game::s_pInstance = 0;
 
@@ -48,28 +48,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   // Initialise joysticks
   TheInputHandler::Instance()->initialiseJoysticks();
 
-  // Load a image
-  if (!TheTextureManager::Instance()->load("../res/animate-alpha.png", "animate", m_pRenderer)) {
-    return false;
-  }
-
-  // Load the game objects
-  m_player = new Player(new LoaderParams(100, 100, 128, 82, "animate"));
-  m_enemy = new Enemy(new LoaderParams(0, 0, 128, 82, "animate"));
-
-  // Add the game objects to the vector
-  m_gameObjects.push_back(m_player);
-  m_gameObjects.push_back(m_enemy);
+  // Initialize game state machine
+  m_pGameStateMachine = new GameStateMachine();
+  m_pGameStateMachine->changeState(new MenuState());
 
   return true;
 }
 
 // Update
 void Game::update() {
-  // Loop through and update our objects
-  for(auto& gameObject : m_gameObjects) {
-    gameObject->update();
-  }
+  m_pGameStateMachine->update();
 }
 
 // Render
@@ -77,10 +65,7 @@ void Game::render() {
   // Clear the window to black
   SDL_RenderClear(m_pRenderer);
 
-  // Loop through the objects and draw them
-  for(auto& gameObject : m_gameObjects) {
-    gameObject->draw();
-  }
+  m_pGameStateMachine->render();
 
   // Show the window
   SDL_RenderPresent(m_pRenderer);
@@ -89,6 +74,10 @@ void Game::render() {
 // Handle events
 void Game::handleEvents() {
   TheInputHandler::Instance()->update();
+
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN)) {
+    m_pGameStateMachine->changeState(new PlayState());
+  }
 }
 
 // Clean

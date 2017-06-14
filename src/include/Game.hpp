@@ -5,6 +5,7 @@
 #include<SDL.h>
 #include"Player.hpp"
 #include"Enemy.hpp"
+#include"GameStateMachine.hpp"
 
 class Game {
 public:
@@ -48,6 +49,9 @@ private:
   Player* m_player;
   Enemy* m_enemy;
   std::vector<GameObject*> m_gameObjects;
+
+  // Game state machine
+  GameStateMachine* m_pGameStateMachine;
 
   int m_currentFrame;
 
