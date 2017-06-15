@@ -1,7 +1,11 @@
 #ifndef __MENUSTATE__
 #define __MENUSTATE__
 
+#include<vector>
 #include"GameState.hpp"
+#include"GameObject.hpp"
+#include"TextureManager.hpp"
+#include"MenuButton.hpp"
 
 class MenuState : public GameState {
 
@@ -20,6 +24,7 @@ public:
 private:
 
   static const std::string s_menuID;
+  std::vector<GameObject*> m_gameObjects;
 };
 
 #endif

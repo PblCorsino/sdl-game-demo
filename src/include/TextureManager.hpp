@@ -27,6 +27,10 @@ public:
   void drawFrame(std::string id, int x, int y, int width, int height
                  , int currentRow, int currentFrame
                  , SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+  // Clear from textureID
+  void clearFromTextureMap(std::string id);
+
 private:
   // Constructor is private to make a singleton class
   TextureManager() {}
