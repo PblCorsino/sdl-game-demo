@@ -36,6 +36,11 @@ public:
     return m_bRunning;
   }
 
+  // Get game stat machine
+  GameStateMachine* getStateMachine() {
+    return m_pGameStateMachine;
+  }
+
 private:
 
   // Constructor is private to make a singleton class
