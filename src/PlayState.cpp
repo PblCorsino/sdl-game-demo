@@ -1,10 +1,15 @@
 #include"include/PlayState.hpp"
+#include"include/PauseState.hpp"
 #include"include/Game.hpp"
 #include"include/Player.hpp"
 
 const std::string PlayState::s_playID = "PLAY";
 
 void PlayState::update() {
+  // Pause the game with ESC key
+  if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
+    TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+  }
   for (auto* gameObject : m_gameObjects) {
     gameObject->update();
   }

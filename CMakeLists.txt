@@ -20,6 +20,7 @@ SET(SOURCE_FILES
   src/PlayState.cpp
   src/GameStateMachine.cpp
   src/MenuButton.cpp
+  src/PauseState.cpp
   src/Enemy.cpp)
 
 # Route to the executable and main file of the project

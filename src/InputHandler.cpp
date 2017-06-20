@@ -5,11 +5,16 @@ InputHandler* InputHandler::s_pInstance = 0;
 
 InputHandler::InputHandler() {
   // Initialise mouse buttons
+  reset();
+  // Initialise the mouse position
+  m_mousePosition = new Vector2D(0, 0);
+}
+
+// Reset the mouse button states to false
+void InputHandler::reset() {
   for (int i = 0; i < 3; i++) {
     m_mouseButtonStates.push_back(false);
   }
-  // Initialise the mouse position
-  m_mousePosition = new Vector2D(0, 0);
 }
 
 void InputHandler::initialiseJoysticks() {
@@ -88,7 +93,7 @@ void InputHandler::update() {
     case SDL_QUIT:
       TheGame::Instance()->quit();
       break;
-      
+
     case SDL_JOYAXISMOTION:
       onJoystickAxisMove(event);
       break;

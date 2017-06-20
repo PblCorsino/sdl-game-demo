@@ -46,6 +46,8 @@ public:
   Vector2D* getMousePosition() {
     return m_mousePosition;
   }
+  // Reset the mouse button states to false
+  void reset();
 
   // Keyboard
   bool isKeyDown(SDL_Scancode key);
