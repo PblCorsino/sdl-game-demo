@@ -2,6 +2,7 @@
 #include"include/PauseState.hpp"
 #include"include/Game.hpp"
 #include"include/Player.hpp"
+#include"include/Enemy.hpp"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -27,10 +28,15 @@ bool PlayState::onEnter() {
   if (!TheTextureManager::Instance()->load("../res/animate-alpha.png", "helicopter", TheGame::Instance()->getRenderer())) {
     return false;
   }
+  if (!TheTextureManager::Instance()->load("../res/helicopter.png", "helicopter2", TheGame::Instance()->getRenderer())) {
+    return false;
+  }
 
-  GameObject* player = new Player(new LoaderParams(100, 100, 128, 82, "helicopter"));
+  GameObject* player = new Player(new LoaderParams(500, 100, 128, 82, "helicopter"));
+  GameObject* enemy = new Enemy(new LoaderParams(100, 100, 180, 94, "helicopter2"));
 
   m_gameObjects.push_back(player);
+  m_gameObjects.push_back(enemy);
 
   return true;
 }

@@ -11,6 +11,10 @@ public:
   virtual void draw();
   virtual void update();
   virtual void clean();
+
+private:
+
+  const int m_numFrames = 7;
 };
 
 #endif
