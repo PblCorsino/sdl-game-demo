@@ -1,13 +1,12 @@
-#ifndef __PLAYSTATE__
-#define __PLAYSTATE__
+#ifndef __GAMEOVERSTATE__
+#define __GAMEOVERSTATE__
 
-#include<vector>
 #include"GameState.hpp"
-#include"SDLGameObject.hpp"
+#include<vector>
 
 class GameObject;
 
-class PlayState : public GameState {
+class GameOverState : public GameState {
 
 public:
 
@@ -17,15 +16,17 @@ public:
   virtual bool onEnter();
   virtual bool onExit();
 
-  bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
-
   virtual std::string getStateID() const {
-    return s_playID;
+    return s_gameOverID;
   }
 
 private:
 
-  static const std::string s_playID;
+  static void s_gameOverToMain();
+  static void s_restartPlay();
+
+  static const std::string s_gameOverID;
+
   std::vector<GameObject*> m_gameObjects;
 };
 
