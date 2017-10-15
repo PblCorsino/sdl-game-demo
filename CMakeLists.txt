@@ -44,5 +44,5 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 # Execute a custom command post build to join all the .clang_complete files
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
   POST_BUILD
-  COMMAND ../helpers/join_clang.sh
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/helpers/join_clang.sh
   )
